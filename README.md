@@ -9,5 +9,7 @@ git commit --amend --no-edit
 不需要该描述信息直接追加
 
 增加了两个跨界见
+
 alt + t 打开 terminal
+
 alt + c 清空控制台
