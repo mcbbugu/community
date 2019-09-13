@@ -6,5 +6,7 @@
     box-shadow: 0 2px 3px rgba(0,0,0,.1);
 }
 body{
-    background: #e2e2e2;
+    background: #f6f6f6;
+    /*background-image: url(email-pattern.png);*/
+    /*background-repeat: repeat-x, repeat-x;*/
 }

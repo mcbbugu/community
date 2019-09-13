@@ -16,12 +16,12 @@
     <script src="js/semantic.js"></script>
     <script>
         $(document)
-            .ready(function() {
+            .ready(function () {
                 $('.ui.menu .ui.dropdown').dropdown({
                     on: 'hover'
                 });
                 $('.ui.menu a.item')
-                    .on('click', function() {
+                    .on('click', function () {
                         $(this)
                             .addClass('active')
                             .siblings()
@@ -49,6 +49,7 @@
     </div>
 
     <div class="right menu">
+        <a class="item" href="/publish">发问</a>
         <div class="ui dropdown item" th:if="${session.user!=null}">
             <div th:text="${session.user.name}"></div>
             <i class="dropdown icon"></i>
@@ -63,42 +64,45 @@
                 <!--<div class="item">One more separated link</div>-->
             </div>
         </div>
-        <a class="item" th:if="${session.user==null}" href="https://github.com/login/oauth/authorize?client_id=0154f308114d26acee50&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+        <a class="item" th:if="${session.user==null}"
+           href="https://github.com/login/oauth/authorize?client_id=0154f308114d26acee50&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
     </div>
 </div>
+
+
 <div class="ui celled container main">
-    <h3 class="ui dividing header"><i class="plus icon"></i>发起</h3>
+    <h4 class="ui dividing header"><i class="pencil alternate icon"></i>发问</h4>
     <!--下划线-->
     <div class="ui horizontal section spaced divider"></div>
     <!--左侧-->
     <div class="ui twelve column grid">
         <div class="twelve wide column">
             <!--标题栏-->
-            <form class="ui form">
+            <form class="ui form" action="/publish" method="post">
                 <div class="field">
-                    <label>问题标题</label>
-                    <input type="text" name="title" id="title" placeholder="问题标题 ...">
-                </div>
-                <div class="field">
-                    <label>问题补充 ...</label>
-                    <textarea placeholder="请输入问题描述 ..."></textarea>
+                    <!--<label>问题标题</label>-->
+                    <input th:value="${title}" type="text" name="title" id="title" placeholder="问题标题 ...">
                 </div>
                 <div class="field">
-                    <label>添加标签</label>
-                    <input type="text" name="tag" id="tag" placeholder="输入标签，以逗号隔开 ...">
+                    <!--<label>问题补充 ...</label>-->
+                    <textarea th:text="${description}" name="description" id="description" placeholder="请输入问题描述 ..."></textarea>
                 </div>
-                <div class="ui buttons">
-                    <button class="ui positive button active">发布</button>
-                    <!--<div class="or" data-text="or"></div>-->
-                    <button class="ui button">草稿</button>
+                <div class="field">
+                    <!--<label>添加标签</label>-->
+                    <input th:value="${tag}" type="text" name="tag" id="tag" placeholder="输入标签，以逗号隔开 ...">
                 </div>
+                <div th:if="${error!=null}" th:text="${error}" class="ui red message"></div>
+                <button class="ui right floated green button">发布</button>
             </form>
         </div>
         <div class="four wide column">
-            <h3>问题发起指南</h3>
-            <p>• 问题标题: 请用精简的语言描述您发布的问题，不超过25字<p>
-            <p>• 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料<p>
-            <p>• 选择标签: 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字<p>
+            <h3>发问指南</h3>
+            <p>• 问题标题: 请用精简的语言描述您发布的问题，不超过25字
+            <p>
+            <p>• 问题补充: 详细补充您的问题内容，并确保问题描述清晰直观, 并提供一些相关的资料
+            <p>
+            <p>• 选择标签: 选择一个或者多个合适的标签，用逗号隔开，每个标签不超过10个字
+            <p>
         </div>
     </div>
 </div>

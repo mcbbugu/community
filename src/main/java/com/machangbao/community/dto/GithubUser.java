@@ -15,4 +15,6 @@ public class GithubUser {
     private String id;
 
     private String bio;
+
+    private String avatarUrl;
 }

@@ -12,6 +12,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="css/semantic.min.css" rel="stylesheet" type="text/css">
     <script src="js/jquery.min.js"></script>
+    <link href="css/community.css" rel="stylesheet" type="text/css">
     <script src="js/semantic.js"></script>
     <script>
         $(document)
@@ -48,6 +49,7 @@
     </div>
 
     <div class="right menu">
+        <a class="item" href="/publish">发问</a>
         <div class="ui dropdown item" th:if="${session.user!=null}">
             <div th:text="${session.user.name}"></div>
             <i class="dropdown icon"></i>
@@ -64,6 +66,63 @@
         </div>
         <div class="item">
             <a th:if="${session.user==null}" href="https://github.com/login/oauth/authorize?client_id=0154f308114d26acee50&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+        </div>
+    </div>
+</div>
+
+<!--左边模块-->
+<div class="ui celled container main">
+    <!--<i class="bars icon"></i>-->
+    <!--<h3 class="ui dividing header"><i class="bars icon"></i>发现</h3>-->
+    <!--下划线-->
+    <div class="ui horizontal section spaced divider"></div>
+    <!--左侧-->
+    <div class="ui twelve column grid">
+        <div class="twelve wide column">
+            <div class="ui comments" th:each="question:${questions}">
+                <div class="comment">
+                    <a class="avatar">
+                        <img th:src="${question.user.avatarUrl}">
+                    </a>
+                    <div class="content">
+                        <div class="metadata">
+                            <a style="font-size:1rem; color:#2185d0!important;" class="author" th:text="${question.title}"></a>
+                        </div>
+                    </div>
+
+                    <div class="content">
+                        <div class="metadata">
+
+                            <div class="rating">
+                                <i class="user outline icon"></i>
+                                <span th:text="${question.user.name}"></span>
+                            </div>
+
+                            <div class="date">
+                                <i class="clock outline icon"></i>
+                                <span th:text="${#dates.format(question.gmtCreate, 'dd MMMM yyyy')}"></span>
+                            </div>
+
+                            <div class="rating">
+                                <i class="eye icon"></i>
+                                <span th:text="${question.viewCount}"></span>
+                            </div>
+
+                            <i class="comment alternate outline icon"></i>
+                            <div class="rating">
+                                <span th:text="${question.commentCount}"></span>
+                            </div>
+                        </div>
+                        <!--<div class="text" th:text="${question.description}">-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--右侧-->
+        <div class="four wide column">
+            <h3>热门话题</h3>
         </div>
     </div>
 </div>
