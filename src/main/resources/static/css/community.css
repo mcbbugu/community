@@ -1,12 +1,37 @@
 .main{
-    margin: 20px;
+    margin: 20px 10px;
     padding: 40px;
-    border-radius: 3px;
-    background: #ffffff;
-    box-shadow: 0 2px 3px rgba(0,0,0,.1);
 }
 body{
     background: #f6f6f6;
     /*background-image: url(email-pattern.png);*/
     /*background-repeat: repeat-x, repeat-x;*/
+}
+
+.test{
+    background-color: #f6f6f6 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.test::before{
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.ui.menu .item::before{
+    background: none !important;
+}
+
+.ui.menu{
+    border:none !important;
+    margin: 0px;
+}
+
+.part{
+    background: #fff;
+    border-radius: 2px;
+    box-shadow: 0 2px 3px rgba(0,0,0,.1);
+    margin-right: 2rem;
 }

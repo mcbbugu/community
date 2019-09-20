@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${question.title}"></title>
+</head>
+<body>
+<!DOCTYPE HTML>
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="/css/semantic.min.css" rel="stylesheet" type="text/css">
+    <script src="/js/jquery.min.js"></script>
+    <link href="/css/community.css" rel="stylesheet" type="text/css">
+    <script src="/js/semantic.js"></script>
+    <script>
+        $(document)
+            .ready(function () {
+
+                $('.special.cards .image').dimmer({
+                    on: 'hover'
+                });
+
+                $('.ui.menu .ui.dropdown').dropdown({
+                    on: 'hover'
+                });
+                $('.ui.menu a.item')
+                    .on('click', function () {
+                        $(this)
+                            .addClass('active')
+                            .siblings()
+                            .removeClass('active')
+                        ;
+                    });
+                $('.button')
+                    .popup({
+                        inline: true
+                    });
+            });
+    </script>
+</head>
+<body>
+<div th:insert="~{navigation :: div}"></div>
+<!--<i class="bars icon"></i>-->
+
+
+<!--左边模块-->
+<div class="ui celled container main">
+    <div class="ui fourteen column grid">
+        <div class="one wide column" style="margin-top: 130px;">
+            <div class="ui list">
+                <div class="item" th:if="${session.user==null||session.user.id!=question.creator}">
+                    <a class="circular ui icon button">
+                        <i class="thumbs up outline icon"></i>
+                    </a>
+                </div>
+                <div class="item" th:if="${session.user==null||session.user.id!=question.creator}">
+                    <a class="circular ui icon button">
+                        <i class="comment outline icon"></i>
+                    </a>
+                </div>
+                <div class="item" th:if="${session.user==null||session.user.id!=question.creator}">
+                    <a class="circular ui icon button">
+                        <i class="bookmark outline icon"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="eleven wide column">
+            <div class="ui comments">
+                <div class="comment">
+                    <div class="content">
+                        <div class="metadata">
+                            <h2 class="ui header" th:text="${question.title}"></h2>
+                        </div>
+                    </div>
+                    <div style="height: 5px;"></div>
+                    <div class="content">
+                        <div class="metadata">
+                            <!--<div class="rating">-->
+                                <!--<i class="user outline icon"></i>-->
+                                <!--<span th:text="${question.user.name}"></span>-->
+                            <!--</div>-->
+
+                            <div class="date">
+                                <i class="clock outline icon"></i>
+                                <span th:text="${#dates.format(question.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
+                            </div>
+
+                            <div class="rating">
+                                <i class="eye icon"></i>
+                                <span th:text="${question.viewCount}"></span>
+                            </div>
+
+                            <i class="comment alternate outline icon"></i>
+                            <div class="rating">
+                                <span th:text="${question.commentCount}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<h3 class="ui dividing header"><span ></span></h3>-->
+            <!--下划线-->
+            <!--<div class="ui horizontal section spaced divider"></div>-->
+
+            <div class="ui raised very padded text container segment">
+                <!--<h3 class="ui header"></h3>-->
+
+                <div class="item">
+                    <a class="circular ui icon right floated button" th:href="@{'/publish/'+${question.id}}"
+                       th:if="${session.user!=null&&session.user.id==question.creator}">
+                        <i class="edit outline icon"></i>
+                    </a>
+                </div>
+
+                <p th:text="${question.description}"></p>
+            </div>
+        </div>
+
+        <!--右侧-->
+        <div class="four wide column">
+            <div class="ui special cards">
+                <div class="card">
+                    <div class="blurring dimmable image">
+                        <div class="ui dimmer">
+                            <div class="content">
+                                <div class="center">
+                                    <div class="ui inverted button">关注</div>
+                                </div>
+                            </div>
+                        </div>
+                        <img th:src="${question.user.avatarUrl}">
+                    </div>
+                    <div class="content">
+                        <div class="meta" th:text="${question.user.name}"></div>
+                    </div>
+                    <div class="content">
+                        <div class="meta">
+                            创建于&nbsp;<span class="date" th:text="${#dates.format(question.user.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
+                        </div>
+                    </div>
+                    <div class="extra content">
+                        <a>
+                            2231 粉丝
+                        </a>
+                        <a class="right floated">
+                            323 关注
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

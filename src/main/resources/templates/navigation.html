@@ -1,26 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>布谷社区</title>
-</head>
-<body>
-<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <link href="css/semantic.min.css" rel="stylesheet" type="text/css">
     <script src="js/jquery.min.js"></script>
+    <link href="css/community.css" rel="stylesheet" type="text/css">
     <script src="js/semantic.js"></script>
     <script>
         $(document)
-            .ready(function() {
+            .ready(function () {
                 $('.ui.menu .ui.dropdown').dropdown({
                     on: 'hover'
                 });
                 $('.ui.menu a.item')
-                    .on('click', function() {
+                    .on('click', function () {
                         $(this)
                             .addClass('active')
                             .siblings()
@@ -33,9 +27,34 @@
     </script>
 </head>
 <body>
+
+<!--<div class="ui secondary menu" style="margin:5px 62.5px">-->
+    <!--<a class="blue item active" href="http://localhost:8887/">-->
+        <!--布谷社区-->
+    <!--</a>-->
+    <!--<a class="blue item">-->
+        <!--占位-->
+    <!--</a>-->
+    <!--<a class="blue item">-->
+        <!--占位-->
+    <!--</a>-->
+    <!--<div class="right menu">-->
+        <!--<div class="item">-->
+            <!--<div class="ui transparent icon input">-->
+                <!--<input type="text" placeholder="搜索问题...">-->
+                <!--<i class="search link icon"></i>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="item">-->
+        <!--<a th:if="${session.user==null}"-->
+        <!--href="https://github.com/login/oauth/authorize?client_id=0154f308114d26acee50&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
 <div class="ui menu">
     <!--<div class="header item">布谷社区</div>-->
-    <a class="item">布谷社区</a>
+    <a class="item" href="http://localhost:8887/">布谷社区</a>
     <!--<a class="item">Link</a>-->
     <div class="left menu">
         <div class="item">
@@ -48,13 +67,14 @@
     </div>
 
     <div class="right menu">
+        <a class="item" href="/publish">发问</a>
         <div class="ui dropdown item" th:if="${session.user!=null}">
             <div th:text="${session.user.name}"></div>
             <i class="dropdown icon"></i>
             <div class="menu">
-                <div class="item">消息中心</div>
-                <div class="item">个人资料</div>
-                <div class="item">退出登录</div>
+
+                <a class="item" href="/profile/questions">我的问题</a>
+                <a class="item" href="/logout">退出登录</a>
                 <!--<div class="item">Something else here</div>-->
                 <!--<div class="divider"></div>-->
                 <!--<div class="item">Separated Link</div>-->
@@ -63,7 +83,8 @@
             </div>
         </div>
         <div class="item">
-            <a th:if="${session.user==null}" href="https://github.com/login/oauth/authorize?client_id=0154f308114d26acee50&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
+            <a th:if="${session.user==null}"
+               href="https://github.com/login/oauth/authorize?client_id=0154f308114d26acee50&redirect_uri=http://localhost:8887/callback&scope=user&state=1">登录</a>
         </div>
     </div>
 </div>

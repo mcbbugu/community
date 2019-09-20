@@ -1,5 +1,6 @@
 package com.machangbao.community.controller;
 
+import com.machangbao.community.service.Userservice;
 import com.machangbao.community.dto.AccessTokenDTO;
 import com.machangbao.community.dto.GithubUser;
 import com.machangbao.community.mapper.UserMapper;
@@ -39,6 +40,10 @@ public class AuthorizeController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private Userservice userservice;
+
+
     @GetMapping("/callback")
     public String callback(@RequestParam(name = "code")String code,
                            @RequestParam(name = "state") String state,
@@ -54,22 +59,31 @@ public class AuthorizeController {
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
 
-        if(githubUser != null){
+        if(githubUser != null && githubUser.getId() != null){
             //生成 token 并保存用户信息到数据库，接着把 token 放入 cookie
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
             user.setName(githubUser.getName());
             user.setAccountId(String.valueOf(githubUser.getId()));
-            user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(user.getGmtCreate());
             user.setAvatarUrl(githubUser.getAvatarUrl());
-            userMapper.insert(user);
+            userservice.createOrUpdate(user);
             response.addCookie(new Cookie("token", token));
             return "redirect:/";
         }else{
             //登录失败，重新登录
             return "redirect:/";
         }
+    }
+
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request,
+                         HttpServletResponse response){
+        request.getSession().removeAttribute("user");
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+        return "redirect:/";
     }
 }
