@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * .
@@ -43,8 +41,6 @@ public class CommentController {
         //Long类型要加个L
         comment.setLikeCount(0L);
         commentServie.insert(comment);
-        Map<Object, Object> objectObjectMap = new HashMap<>();
-        objectObjectMap.put("message", "成功");
-        return objectObjectMap;
+        return ResultDTO.okof();
     }
 }

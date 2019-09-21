@@ -10,7 +10,8 @@ public enum CustomizeErrorCode implements ICustomizeErrorCode{
 
     QUESTION_NOT_FOUND(2001, "你找的问题不在了，换个试试"),
     TARGET_PARAM__NOT_FOUND(2002, "未选中任何问题或评论进行回复"),
-    NO_LOGIN(2003, "未登录，不能评论，请先登录")
+    NO_LOGIN(2003, "未登录，不能评论，请先登录"),
+    SYS_ERROR(2004, "服务冒烟了")
     ;
 
     private String message;

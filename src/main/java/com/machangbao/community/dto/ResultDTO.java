@@ -1,6 +1,7 @@
 package com.machangbao.community.dto;
 
 import com.machangbao.community.exception.CustomizeErrorCode;
+import com.machangbao.community.exception.CustomizeException;
 import lombok.Data;
 
 /**
@@ -24,5 +25,16 @@ public class ResultDTO {
 
     public static ResultDTO errorOf(CustomizeErrorCode errorCode) {
         return errorOf(errorCode.getCode(), errorCode.getMessage());
+    }
+
+    public static ResultDTO errorof(CustomizeException e){
+        return errorOf(e.getCode(), e.getMessage());
+    }
+
+    public static ResultDTO okof(){
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功");
+        return resultDTO;
     }
 }
