@@ -13,9 +13,15 @@
     <script src="/js/jquery.min.js"></script>
     <link href="/css/community.css" rel="stylesheet" type="text/css">
     <script src="/js/semantic.js"></script>
+    <script src="/js/community.js"></script>
     <script>
         $(document)
             .ready(function () {
+
+                //手风琴
+                $('.ui.accordion')
+                    .accordion()
+                ;
 
                 $('.special.cards .image').dimmer({
                     on: 'hover'
@@ -46,7 +52,7 @@
 
 <!--左边模块-->
 <div class="ui celled container main">
-    <div class="ui fourteen column grid">
+    <div class="ui twelve column grid">
         <div class="one wide column" style="margin-top: 130px;">
             <div class="ui list">
                 <div class="item" th:if="${session.user==null||session.user.id!=question.creator}">
@@ -78,8 +84,8 @@
                     <div class="content">
                         <div class="metadata">
                             <!--<div class="rating">-->
-                                <!--<i class="user outline icon"></i>-->
-                                <!--<span th:text="${question.user.name}"></span>-->
+                            <!--<i class="user outline icon"></i>-->
+                            <!--<span th:text="${question.user.name}"></span>-->
                             <!--</div>-->
 
                             <div class="date">
@@ -105,19 +111,77 @@
             <!--<div class="ui horizontal section spaced divider"></div>-->
 
             <div class="ui raised very padded text container segment">
-                <!--<h3 class="ui header"></h3>-->
-
                 <div class="item">
                     <a class="circular ui icon right floated button" th:href="@{'/publish/'+${question.id}}"
                        th:if="${session.user!=null&&session.user.id==question.creator}">
                         <i class="edit outline icon"></i>
                     </a>
                 </div>
-
                 <p th:text="${question.description}"></p>
             </div>
-        </div>
 
+            <div class="ui threaded comments">
+                <h3 class="ui dividing header" th:text="${question.commentCount} + ' 个回复'">Comments</h3>
+                <div class="comment" th:each="comment:${comments}">
+                    <a class="avatar">
+                        <img th:src="${comment.user.avatarUrl}">
+                    </a>
+                    <div class="content">
+                        <a class="author" th:text="${comment.user.name}">Matt</a>
+                        <div class="metadata">
+                            <span class="date"
+                                  th:text="${#dates.format(comment.user.gmtCreate, 'yyyy-MM-dd HH:mm:ss')}">Today at 5:42PM</span>
+                        </div>
+                        <div class="text" th:text="${comment.getContent()}">
+                            How artistic!
+                        </div>
+                        <div class="actions">
+                            <!--手风琴-->
+                            <div class="ui accordion">
+                                <div class="title" th:data-id="${comment.id}" onclick="collapseComments(this)">
+                                    <i class="comment alternate outline icon"></i>
+                                </div>
+                                <!--子评论-->
+                                <div class="content" th:id="${'comment-'+comment.id}">
+                                    <div class="comments" th:each="comment:${comments}">
+                                        <div class="comment">
+                                            <a class="avatar">
+                                                <img th:src="${comment.user.avatarUrl}">
+                                            </a>
+                                            <div class="content">
+                                                <a class="author" th:text="${comment.user.name}">Jenny Hess</a>
+                                                <div class="metadata">
+                                                    <span class="date" th:text="${#dates.format(comment.user.gmtCreate, 'yyyy-MM-dd HH:mm:ss')}">Just now</span>
+                                                </div>
+                                                <div class="text" th:text="${comment.getContent()}">
+                                                    Elliot you are always so right :)
+                                                </div>
+                                                <div class="actions">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ui fluid action input">
+                                        <input type="text" placeholder="评论一下..." th:id="${'input-'+comment.id}">
+                                        <div class="ui button" onclick="comment(this)" th:data-id="${comment.id}">评论</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form class="ui reply form">
+                    <input type="hidden" id="question_id" th:value="${question.id}">
+                    <div class="field">
+                        <textarea id="comment_content"></textarea>
+                    </div>
+                    <div class="ui blue labeled submit icon button" onclick="post()">
+                        <i class="icon edit"></i> 回复
+                    </div>
+                </form>
+            </div>
+        </div>
         <!--右侧-->
         <div class="four wide column">
             <div class="ui special cards">
@@ -137,7 +201,8 @@
                     </div>
                     <div class="content">
                         <div class="meta">
-                            创建于&nbsp;<span class="date" th:text="${#dates.format(question.user.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
+                            创建于&nbsp;<span class="date"
+                                           th:text="${#dates.format(question.user.gmtCreate, 'yyyy-MM-dd HH:mm')}"></span>
                         </div>
                     </div>
                     <div class="extra content">
@@ -152,6 +217,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

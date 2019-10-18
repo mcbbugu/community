@@ -3,6 +3,8 @@ package com.machangbao.community.provider;
 import com.alibaba.fastjson.JSON;
 import com.machangbao.community.dto.AccessTokenDTO;
 import com.machangbao.community.dto.GithubUser;
+import com.machangbao.community.exception.CustomizeErrorCode;
+import com.machangbao.community.exception.CustomizeException;
 import okhttp3.*;
 import org.springframework.stereotype.Component;
 
@@ -48,7 +50,7 @@ public class GithubProvider {
             return githubUser;
         } catch (IOException e) {
             e.printStackTrace();
+            throw new CustomizeException(CustomizeErrorCode.QUESTION_NOT_FOUND);
         }
-        return null;
     }
 }

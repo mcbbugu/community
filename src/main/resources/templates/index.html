@@ -24,8 +24,14 @@
                         ;
                     })
                 ;
-            })
-        ;
+            });
+        window.onload = function(){
+            var closable = window.localStorage.getItem("closable");
+            if(closable){
+                window.close();
+                window.localStorage.removeItem("closable");
+            }
+        }
     </script>
 </head>
 <body>
@@ -107,7 +113,7 @@
         <div class="five wide column">
             <div class="ui card">
                 <div class="image">
-                    <img src="https://upload-images.jianshu.io/upload_images/16594945-0be03666042d3d7d.png">
+                    <img src="https://static001.infoq.cn/resource/image/93/2d/936297732fb5dfffa5479d57e2c7a72d.jpg?x-oss-process=image/crop,x_44,w_1148,h_852/resize,w_420,h_312">
                 </div>
                 <div class="content">
                     <a class="header">热门话题</a>

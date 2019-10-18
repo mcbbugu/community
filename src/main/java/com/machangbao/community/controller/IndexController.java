@@ -8,10 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
- * .
  * Created by mcbbugu
  * 2019-09-08 00:13
  */
@@ -22,10 +19,9 @@ public class IndexController {
     private QuestionService questionService;
 
     @GetMapping("/")
-    public String hello(HttpServletRequest request,
-                        Model model,
-                        @RequestParam(name = "page", defaultValue = "1") Integer page,
-                        @RequestParam(name = "size", defaultValue = "5") Integer size){
+    public String hello(@RequestParam(name = "page", defaultValue = "1") Integer page,
+                        @RequestParam(name = "size", defaultValue = "5") Integer size,
+                        Model model){
         PaginationDTO pagination = questionService.list(page, size);
         model.addAttribute("pagination", pagination);
         return "index";

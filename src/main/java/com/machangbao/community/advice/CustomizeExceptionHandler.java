@@ -50,7 +50,6 @@ public class CustomizeExceptionHandler {
             if(e instanceof CustomizeException){
                 model.addAttribute("message", e.getMessage());
             }else {
-                System.out.println(e.getMessage());
                 model.addAttribute("message", CustomizeErrorCode.SYS_ERROR);
             }
             return new ModelAndView("error");
